@@ -16,10 +16,6 @@ const Dashboard = () => {
   const [settlements, setSettlements] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    fetchDashboardData();
-  }, [fetchDashboardData]);
-
   const fetchDashboardData = useCallback(async () => {
     try {
       const [groupsRes, settlementsRes] = await Promise.all([
@@ -35,6 +31,10 @@ const Dashboard = () => {
       setLoading(false);
     }
   }, [user.id]);
+
+  useEffect(() => {
+    fetchDashboardData();
+  }, [fetchDashboardData]);
 
   const calculateTotalOwed = () => {
     return settlements

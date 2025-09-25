@@ -23,10 +23,6 @@ const GroupDetail = () => {
   const [loading, setLoading] = useState(true);
   const [activeTab, setActiveTab] = useState('expenses');
 
-  useEffect(() => {
-    fetchGroupData();
-  }, [id, fetchGroupData]);
-
   const fetchGroupData = useCallback(async () => {
     try {
       const [groupRes, expensesRes] = await Promise.all([
@@ -43,6 +39,10 @@ const GroupDetail = () => {
       setLoading(false);
     }
   }, [id]);
+
+  useEffect(() => {
+    fetchGroupData();
+  }, [fetchGroupData]);
 
   const formatDate = (dateString) => {
     return new Date(dateString).toLocaleDateString('en-US', {

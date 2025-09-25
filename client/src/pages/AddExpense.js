@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { useAuth } from '../context/AuthContext';
 import api from '../utils/api';
 import toast from 'react-hot-toast';
 import { 
@@ -35,10 +34,6 @@ const AddExpense = () => {
     { value: 'other', label: 'Other' }
   ];
 
-  useEffect(() => {
-    fetchGroup();
-  }, [id, fetchGroup]);
-
   const fetchGroup = useCallback(async () => {
     try {
       const response = await api.get(`/api/groups/${id}`);
@@ -57,6 +52,10 @@ const AddExpense = () => {
       navigate('/groups');
     }
   }, [id, navigate]);
+
+  useEffect(() => {
+    fetchGroup();
+  }, [fetchGroup]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;

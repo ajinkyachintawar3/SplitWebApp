@@ -18,10 +18,6 @@ const Settlements = () => {
   const [loading, setLoading] = useState(true);
   const [filter, setFilter] = useState('all'); // all, pending, paid
 
-  useEffect(() => {
-    fetchSettlements();
-  }, [fetchSettlements]);
-
   const fetchSettlements = useCallback(async () => {
     try {
       const response = await api.get(`/api/settlements/user/${user.id}`);
@@ -33,6 +29,10 @@ const Settlements = () => {
       setLoading(false);
     }
   }, [user.id]);
+
+  useEffect(() => {
+    fetchSettlements();
+  }, [fetchSettlements]);
 
   const handleMarkAsPaid = async (settlementId) => {
     try {

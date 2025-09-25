@@ -65,15 +65,6 @@ export const AuthProvider = ({ children }) => {
     }
   }, [state.token]);
 
-  // Load user on app start
-  useEffect(() => {
-    if (state.token) {
-      loadUser();
-    } else {
-      dispatch({ type: 'AUTH_ERROR' });
-    }
-  }, [state.token, loadUser]);
-
   const loadUser = useCallback(async () => {
     try {
       const res = await axios.get('/api/auth/me');
@@ -85,6 +76,15 @@ export const AuthProvider = ({ children }) => {
       dispatch({ type: 'AUTH_ERROR' });
     }
   }, []);
+
+  // Load user on app start
+  useEffect(() => {
+    if (state.token) {
+      loadUser();
+    } else {
+      dispatch({ type: 'AUTH_ERROR' });
+    }
+  }, [state.token, loadUser]);
 
   const register = async (userData) => {
     try {
