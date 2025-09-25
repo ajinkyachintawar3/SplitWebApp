@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import api from '../utils/api';
@@ -6,15 +6,12 @@ import toast from 'react-hot-toast';
 import { 
   ArrowLeft, 
   DollarSign, 
-  Users, 
   FileText,
-  Receipt,
   Tag
 } from 'lucide-react';
 
 const AddExpense = () => {
   const { id } = useParams();
-  const { user } = useAuth();
   const navigate = useNavigate();
   const [group, setGroup] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -40,9 +37,9 @@ const AddExpense = () => {
 
   useEffect(() => {
     fetchGroup();
-  }, [id]);
+  }, [id, fetchGroup]);
 
-  const fetchGroup = async () => {
+  const fetchGroup = useCallback(async () => {
     try {
       const response = await api.get(`/api/groups/${id}`);
       setGroup(response.data);
@@ -59,7 +56,7 @@ const AddExpense = () => {
       toast.error('Failed to load group data');
       navigate('/groups');
     }
-  };
+  }, [id, navigate]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;

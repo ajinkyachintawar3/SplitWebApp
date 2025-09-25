@@ -6,7 +6,6 @@ import toast from 'react-hot-toast';
 import { ArrowLeft, Users, DollarSign } from 'lucide-react';
 
 const CreateGroup = () => {
-  const { user } = useAuth();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({

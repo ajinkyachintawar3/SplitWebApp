@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import api from '../utils/api';
@@ -10,8 +10,6 @@ import {
   DollarSign, 
   Calendar,
   MoreVertical,
-  Edit,
-  Trash2,
   UserPlus,
   Settings
 } from 'lucide-react';
@@ -27,9 +25,9 @@ const GroupDetail = () => {
 
   useEffect(() => {
     fetchGroupData();
-  }, [id]);
+  }, [id, fetchGroupData]);
 
-  const fetchGroupData = async () => {
+  const fetchGroupData = useCallback(async () => {
     try {
       const [groupRes, expensesRes] = await Promise.all([
         api.get(`/api/groups/${id}`),
@@ -44,7 +42,7 @@ const GroupDetail = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [id]);
 
   const formatDate = (dateString) => {
     return new Date(dateString).toLocaleDateString('en-US', {

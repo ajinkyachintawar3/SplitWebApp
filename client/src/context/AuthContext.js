@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useReducer, useEffect } from 'react';
+import React, { createContext, useContext, useReducer, useEffect, useCallback } from 'react';
 import axios from 'axios';
 import toast from 'react-hot-toast';
 
@@ -72,9 +72,9 @@ export const AuthProvider = ({ children }) => {
     } else {
       dispatch({ type: 'AUTH_ERROR' });
     }
-  }, []);
+  }, [state.token, loadUser]);
 
-  const loadUser = async () => {
+  const loadUser = useCallback(async () => {
     try {
       const res = await axios.get('/api/auth/me');
       dispatch({
@@ -84,7 +84,7 @@ export const AuthProvider = ({ children }) => {
     } catch (error) {
       dispatch({ type: 'AUTH_ERROR' });
     }
-  };
+  }, []);
 
   const register = async (userData) => {
     try {

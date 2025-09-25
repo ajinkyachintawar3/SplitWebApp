@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import api from '../utils/api';
@@ -7,9 +7,7 @@ import {
   Plus, 
   CreditCard, 
   TrendingUp, 
-  TrendingDown,
-  DollarSign,
-  Calendar
+  TrendingDown
 } from 'lucide-react';
 
 const Dashboard = () => {
@@ -20,9 +18,9 @@ const Dashboard = () => {
 
   useEffect(() => {
     fetchDashboardData();
-  }, []);
+  }, [fetchDashboardData]);
 
-  const fetchDashboardData = async () => {
+  const fetchDashboardData = useCallback(async () => {
     try {
       const [groupsRes, settlementsRes] = await Promise.all([
         api.get('/api/groups'),
@@ -36,7 +34,7 @@ const Dashboard = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [user.id]);
 
   const calculateTotalOwed = () => {
     return settlements

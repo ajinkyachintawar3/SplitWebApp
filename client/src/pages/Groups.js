@@ -7,9 +7,7 @@ import {
   Plus, 
   Calendar, 
   DollarSign,
-  MoreVertical,
-  Edit,
-  Trash2
+  MoreVertical
 } from 'lucide-react';
 
 const Groups = () => {

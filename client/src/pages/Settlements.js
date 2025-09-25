@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useAuth } from '../context/AuthContext';
 import api from '../utils/api';
 import toast from 'react-hot-toast';
@@ -6,7 +6,6 @@ import {
   CreditCard, 
   CheckCircle, 
   Clock, 
-  DollarSign,
   Users,
   Filter,
   TrendingUp,
@@ -21,9 +20,9 @@ const Settlements = () => {
 
   useEffect(() => {
     fetchSettlements();
-  }, []);
+  }, [fetchSettlements]);
 
-  const fetchSettlements = async () => {
+  const fetchSettlements = useCallback(async () => {
     try {
       const response = await api.get(`/api/settlements/user/${user.id}`);
       setSettlements(response.data);
@@ -33,7 +32,7 @@ const Settlements = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [user.id]);
 
   const handleMarkAsPaid = async (settlementId) => {
     try {
@@ -196,7 +195,6 @@ const Settlements = () => {
         <div className="space-y-4">
           {filteredSettlements.map((settlement) => {
             const isOwed = settlement.to._id === user.id;
-            const isOwing = settlement.from._id === user.id;
             
             return (
               <div
