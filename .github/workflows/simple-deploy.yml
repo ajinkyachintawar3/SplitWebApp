@@ -1,44 +1,45 @@
-name: Simple Deploy to GitHub Pages
+# DISABLED - Using deploy.yml instead
+# name: Simple Deploy to GitHub Pages
 
-on:
-  push:
-    branches: [ main, master ]
+# on:
+#   push:
+#     branches: [ main, master ]
 
-permissions:
-  contents: read
-  pages: write
-  id-token: write
+# permissions:
+#   contents: read
+#   pages: write
+#   id-token: write
 
-jobs:
-  deploy:
-    runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
+# jobs:
+#   deploy:
+#     runs-on: ubuntu-latest
+#     environment:
+#       name: github-pages
+#       url: ${{ steps.deployment.outputs.page_url }}
     
-    steps:
-    - name: Checkout
-      uses: actions/checkout@v3
+#     steps:
+#     - name: Checkout
+#       uses: actions/checkout@v3
       
-    - name: Setup Node.js
-      uses: actions/setup-node@v3
-      with:
-        node-version: '18'
+#     - name: Setup Node.js
+#       uses: actions/setup-node@v3
+#       with:
+#         node-version: '18'
         
-    - name: Install and Build
-      run: |
-        cd client
-        npm install
-        npm run build
+#     - name: Install and Build
+#       run: |
+#         cd client
+#         npm install
+#         npm run build
         
-    - name: Setup Pages
-      uses: actions/configure-pages@v3
+#     - name: Setup Pages
+#       uses: actions/configure-pages@v3
       
-    - name: Upload artifact
-      uses: actions/upload-pages-artifact@v3
-      with:
-        path: './client/build'
+#     - name: Upload artifact
+#       uses: actions/upload-pages-artifact@v3
+#       with:
+#         path: './client/build'
         
-    - name: Deploy to GitHub Pages
-      id: deployment
-      uses: actions/deploy-pages@v2
+#     - name: Deploy to GitHub Pages
+#       id: deployment
+#       uses: actions/deploy-pages@v2
